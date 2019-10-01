@@ -33,16 +33,16 @@ def del_option(option, y, x, num):
 
 def main():
     """#
-    data = ['000 000 000',
-            '000 000 000',
-            '000 000 000',
-            '000 000 000',
-            '000 000 000',
-            '000 000 000',
-            '000 000 000',
-            '000 000 000',
-            '000 000 000']
-    data = [data[k].replace(' ','') for k in range(9)]
+    data0 = ['000 000 000',
+             '000 000 000',
+             '000 000 000',
+             '000 000 000',
+             '000 000 000',
+             '000 000 000',
+             '000 000 000',
+             '000 000 000',
+             '000 000 000']
+    data = [data0[k].replace(' ','') for k in range(9)]
     #"""
     data = [stdin.readline().rstrip() for i in range(9)]
     print(*data, sep = '\n', end = '\n')
@@ -59,15 +59,12 @@ def main():
     aft = ''.join(data).count('0')
     while aft > 0:
         bef = aft
-        # while any([len(option[k//9][k%9]) == 1 for k in range(81)]) :
         for j, i in itertools.product(range(9),range(9)):
             if len(option[j][i]) == 1 and data[j][i] == '0':
                 num = option[j][i].pop()
                 option[j][i].clear()
                 data[j] = replace2(data[j], i, str(num))
-                # delete options of row/column/square
                 option = del_option(option = option, y = j, x = i, num = num)
-        # for data_type in ['row', 'column', 'square']:
         for dt, j, num in itertools.product(['row','column','square'], range(9), range(1,10)):
             if str(num) in make9(data, y=j, x=j, zone_y = j//3, zone_x = j%3, data_type=dt):
                 continue
@@ -92,14 +89,11 @@ def main():
                 option[y][x].clear()
         aft = ''.join(data).count('0')
         if aft == bef:
-            print('cannot go on, zero qty: {0}.'.format(aft))
-            print()
+            print('cannot go on, zero qty: {0}.\n'.format(aft))
             break
     else:
-        print('completed.', end = '\n')
-        print()
+        print('completed.\n\n')
     print(*data, sep = '\n', end = '\n')
-    #
     print()
     if aft != 0:
         for j, i in itertools.product(range(9),range(9)):
@@ -108,5 +102,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
